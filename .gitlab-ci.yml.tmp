@@ -1,0 +1,26 @@
+stages:
+  - test
+  - integration
+  - merge-request
+  - release
+  - deploy
+  - deploy-static
+  - destroy
+
+variables:
+  environment: $CI_COMMIT_BRANCH
+  AWS_REGION: eu-west-1
+
+cache:
+  key: "$CI_PIPELINE_ID"
+  paths:
+    # keep all env files between stages
+    - ./*.env
+    - infra/deploy.env
+
+include:
+  - local: ci/test.yml
+  # - local: ci/merge-review.yml
+  # - local: ci/deploy-test.yml
+  # - local: ci/deploy-prod.yml
+  # - local: ci/destroy.yml

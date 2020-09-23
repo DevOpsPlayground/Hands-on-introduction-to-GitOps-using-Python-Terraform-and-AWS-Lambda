@@ -1,0 +1,71 @@
+<html>
+
+<head>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <script src="js/app.js"></script>
+
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+
+    <title>Todo List App</title>
+
+    <script type="text/javascript" src="js/lib/axios/dist/axios.standalone.js"></script>
+    <script type="text/javascript" src="js/lib/CryptoJS/rollups/hmac-sha256.js"></script>
+    <script type="text/javascript" src="js/lib/CryptoJS/rollups/sha256.js"></script>
+    <script type="text/javascript" src="js/lib/CryptoJS/components/hmac.js"></script>
+    <script type="text/javascript" src="js/lib/CryptoJS/components/enc-base64.js"></script>
+    <script type="text/javascript" src="js/lib/url-template/url-template.js"></script>
+    <script type="text/javascript" src="js/lib/apiGatewayCore/sigV4Client.js"></script>
+    <script type="text/javascript" src="js/lib/apiGatewayCore/apiGatewayClient.js"></script>
+    <script type="text/javascript" src="js/lib/apiGatewayCore/simpleHttpClient.js"></script>
+    <script type="text/javascript" src="js/lib/apiGatewayCore/utils.js"></script>
+    <script type="text/javascript" src="js/apigClient.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+
+            <!-- To do Items !-->
+            <div class="col-md-6">
+                <div class="todolist not-done">
+                    <h1>Todos</h1>
+                    <input type="text" class="form-control add-todo" placeholder="Add todo">
+                    <button id="checkAll" class="btn btn-success">Mark all as done</button>
+
+                    <hr>
+                    <ul id="todo" class="list-unstyled">
+                    </ul>
+                    <div class="todo-footer">
+                        <strong><span class="count-todos"></span></strong> Items Left
+                    </div>
+                </div>
+            </div>
+
+            <!-- In Progress Items !-->
+            <div class="col-md-6">
+                <div class="todolist in-progress" id="inprogress">
+                    <h1>In Progress</h1>
+
+                    <hr>
+                    <ul id="in-progress-items" class="list-unstyled">
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Done Items !-->
+            <div class="col-md-6">
+                <div class="todolist" id="done">
+                    <h1>Already Done</h1>
+                    <ul id="done-items" class="list-unstyled">
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

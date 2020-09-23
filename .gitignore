@@ -1,0 +1,11 @@
+.terraform
+*.tfstate
+*.tfstate*
+__pycache__
+.pytest_cache
+.eggs
+
+*.egg-info
+.tox
+target
+lambda.zip

@@ -1,0 +1,16 @@
+test:infra:
+  stage: test
+  image:
+    name: hashicorp/terraform:0.12.29
+    entrypoint: [""]
+  script:
+    - cd infra
+    - terraform init
+  tags:
+    - docker
+  except:
+    - master
+    - test
+  only:
+    changes:
+      - infra/*

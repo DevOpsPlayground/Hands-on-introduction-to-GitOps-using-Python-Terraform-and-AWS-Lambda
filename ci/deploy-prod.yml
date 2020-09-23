@@ -1,0 +1,38 @@
+deploy:infra-prod:
+  stage: deploy
+  image:
+    name: hashicorp/terraform:0.12.29
+    entrypoint: [""]
+  only:
+    - master
+  script:
+    - cd infra
+    - terraform init
+    - (terraform workspace select ${CI_ENVIRONMENT_NAME} || terraform workspace new ${CI_ENVIRONMENT_NAME})
+    - terraform apply -var-file=envs/${CI_ENVIRONMENT_NAME}.tfvars -auto-approve
+    # Copy outputs to env files for use in later stages
+    - domain_content=$(terraform output domain_content)
+    - s3_bucket=$(terraform output s3_bucket)
+    - echo "APP_URL=$domain_content" >> deploy.env
+    - echo "export APP_URL=$domain_content" > ../APP_URL.env
+    - echo "export STATIC_BUCKET=$s3_bucket" > ../STATIC_BUCKET.env
+  artifacts:
+    reports:
+      dotenv: infra/deploy.env
+  environment:
+    name: prod
+    url: $APP_URL
+    on_stop: destroy:infra-prod
+deploy-static:static-prod:
+  stage: deploy-static
+  image:
+    name: amazon/aws-cli
+    entrypoint: [""]
+  only:
+    - master
+  script:
+    - source STATIC_BUCKET.env
+    - cd static
+    - aws s3 sync . s3://${STATIC_BUCKET}
+  tags:
+    - docker
