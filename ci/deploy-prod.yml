@@ -11,7 +11,7 @@ deploy:infra-prod:
     - terraform init -backend-config="key=gitops_${USER_NAME}.tfstate"
     - (terraform workspace select ${CI_ENVIRONMENT_NAME} || terraform workspace new ${CI_ENVIRONMENT_NAME})
     - terraform init
-    - terraform apply -var="environment=${CI_ENVIRONMENT_NAME}" -var="username=${CI_ENVIRONMENT_NAME}" -auto-approve
+    - terraform apply -var="environment=${CI_ENVIRONMENT_NAME}" -var="username=${USER_NAME}" -auto-approve
     # Copy outputs to env files for use in later stages
     - domain_content=$(terraform output domain_content)
     - s3_bucket=$(terraform output s3_bucket)
