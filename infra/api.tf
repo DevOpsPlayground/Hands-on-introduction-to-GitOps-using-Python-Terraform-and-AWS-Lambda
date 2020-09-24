@@ -1,26 +1,13 @@
-
-resource "aws_api_gateway_deployment" "deployment" {
-
-  rest_api_id = aws_api_gateway_rest_api.cors_api.id
-  stage_name  = var.environment
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
-
-
 resource "aws_api_gateway_rest_api" "cors_api" {
   name        = "${local.prefix}-api"
   description = "API for the DPG Todo List ${var.environment} environment"
 }
 
-resource "aws_api_gateway_deployment" "deployment_2" {
+resource "aws_api_gateway_deployment" "deployment" {
   rest_api_id = aws_api_gateway_rest_api.cors_api.id
-  stage_name  = "test"
-  # depends_on  = ["aws_api_gateway_integration.integration_add", "aws_api_gateway_integration.integration_list"]
+  stage_name  = var.environment
+  depends_on  = ["module.add_method", "module.delete_method", "module.list_method", "module.start_method", "module.done_method"]
 }
-
 
 /*
 - /

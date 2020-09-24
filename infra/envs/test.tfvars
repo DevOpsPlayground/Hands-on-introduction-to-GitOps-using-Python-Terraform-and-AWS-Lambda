@@ -1,2 +1,0 @@
-environment = "test"
-username    = "cameronharper"

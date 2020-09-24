@@ -1,11 +1,12 @@
+# ensure that Terraform can initialise if we change any of the code
 test:infra:
   stage: test
   image:
-    name: hashicorp/terraform:0.12.29
+    name: hashicorp/terraform:0.13.3
     entrypoint: [""]
   script:
     - cd infra
-    - terraform init
+    - terraform init -backend-config="key=gitops_${USER_NAME}.tfstate"
   tags:
     - docker
   except:

@@ -1,15 +1,17 @@
+# Deploy infrastructure to the test environment
 deploy:infra-prod:
   stage: deploy
   image:
-    name: hashicorp/terraform:0.12.29
+    name: hashicorp/terraform:0.13.3
     entrypoint: [""]
   only:
     - master
   script:
     - cd infra
-    - terraform init
+    - terraform init -backend-config="key=gitops_${USER_NAME}.tfstate"
     - (terraform workspace select ${CI_ENVIRONMENT_NAME} || terraform workspace new ${CI_ENVIRONMENT_NAME})
-    - terraform apply -var-file=envs/${CI_ENVIRONMENT_NAME}.tfvars -auto-approve
+    - terraform init
+    - terraform apply -var="environment=${CI_ENVIRONMENT_NAME}" -var="username=${CI_ENVIRONMENT_NAME}" -auto-approve
     # Copy outputs to env files for use in later stages
     - domain_content=$(terraform output domain_content)
     - s3_bucket=$(terraform output s3_bucket)
@@ -23,6 +25,8 @@ deploy:infra-prod:
     name: prod
     url: $APP_URL
     on_stop: destroy:infra-prod
+
+# Deploy static content from /static to our content S3 bucket
 deploy-static:static-prod:
   stage: deploy-static
   image:
