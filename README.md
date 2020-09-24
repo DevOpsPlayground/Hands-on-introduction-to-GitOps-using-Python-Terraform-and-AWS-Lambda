@@ -15,3 +15,5 @@ Head to the **docs** directory to get started.
 5. [deploying to test](docs/004-deploying-to-test/004-deploying-to-test.md)
 
 6. [exercises](docs/005-exercises/005-exercises.md)
+
+Live stream at: https://www.youtube.com/watch?v=xGxEaEQK1tk
